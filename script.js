@@ -13,7 +13,7 @@ function safeGetElement(id) {
 // Initialize app when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM Content Loaded');
-    initializeApp();
+        initializeApp();
 });
 
 function initializeApp() {
@@ -25,13 +25,13 @@ function initializeApp() {
         console.log('Current language:', currentLanguage);
 
         // Set language attributes
-        setLanguageAttributes(currentLanguage);
+    setLanguageAttributes(currentLanguage);
         
         // Update content
-        updateLanguageContent();
+    updateLanguageContent();
         
         // Initialize page specific features
-        initializePageSpecificFeatures();
+    initializePageSpecificFeatures();
         
         console.log('App initialized successfully');
     } catch (error) {
@@ -129,28 +129,28 @@ function safeShowNotification(message, type = 'success') {
 
 // Initialize Color Picker Features
 function initializeColorFeatures() {
-    if (document.querySelector('[data-page="color"]')) {
+if (document.querySelector('[data-page="color"]')) {
         // Color picker specific initialization
         console.log('Initializing color picker features');
-        const colorPicker = document.getElementById('colorPicker');
-        const imageInput = document.getElementById('imageInput');
-        const colorResults = document.getElementById('colorResults');
+    const colorPicker = document.getElementById('colorPicker');
+    const imageInput = document.getElementById('imageInput');
+    const colorResults = document.getElementById('colorResults');
         const currentColorPreview = document.getElementById('currentColorPreview');
         const currentColorCode = document.getElementById('currentColorCode');
         const imagePreview = document.getElementById('imagePreview');
         const uploadedImage = document.getElementById('uploadedImage');
         const dragZone = document.querySelector('.border-dashed');
 
-        // Handle direct color picker
+    // Handle direct color picker
         colorPicker.addEventListener('input', (e) => {
             const color = e.target.value;
             updateCurrentColor(color);
         });
 
-        colorPicker.addEventListener('change', (e) => {
-            const color = e.target.value;
-            addColorToResults(color);
-        });
+    colorPicker.addEventListener('change', (e) => {
+        const color = e.target.value;
+        addColorToResults(color);
+    });
 
         function updateCurrentColor(color) {
             currentColorPreview.style.backgroundColor = color;
@@ -162,77 +162,77 @@ function initializeColorFeatures() {
             currentColorPreview.style.color = brightness > 128 ? '#000000' : '#FFFFFF';
         }
 
-        // Handle image upload
-        imageInput.addEventListener('change', handleImageUpload);
+    // Handle image upload
+    imageInput.addEventListener('change', handleImageUpload);
 
-        // Drag and drop
-        dragZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
+    // Drag and drop
+    dragZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
             dragZone.classList.add('border-blue-500');
             dragZone.classList.add('bg-blue-50');
-        });
+    });
 
-        dragZone.addEventListener('dragleave', () => {
+    dragZone.addEventListener('dragleave', () => {
             dragZone.classList.remove('border-blue-500');
             dragZone.classList.remove('bg-blue-50');
-        });
+    });
 
-        dragZone.addEventListener('drop', (e) => {
-            e.preventDefault();
+    dragZone.addEventListener('drop', (e) => {
+        e.preventDefault();
             dragZone.classList.remove('border-blue-500');
             dragZone.classList.remove('bg-blue-50');
-            const file = e.dataTransfer.files[0];
-            if (file && file.type.startsWith('image/')) {
-                handleImageFile(file);
-            }
-        });
-
-        function handleImageUpload(e) {
-            const file = e.target.files[0];
-            if (file) {
-                handleImageFile(file);
-            }
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+            handleImageFile(file);
         }
+    });
 
-        function handleImageFile(file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
+    function handleImageUpload(e) {
+        const file = e.target.files[0];
+        if (file) {
+            handleImageFile(file);
+        }
+    }
+
+    function handleImageFile(file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
                 uploadedImage.src = e.target.result;
                 imagePreview.classList.remove('hidden');
-                const img = new Image();
-                img.onload = () => extractColors(img);
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
+            const img = new Image();
+            img.onload = () => extractColors(img);
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
 
-        function extractColors(img) {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0);
-            
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-            const colorMap = new Map();
-            
-            for (let i = 0; i < imageData.length; i += 4) {
-                const color = rgbToHex(imageData[i], imageData[i + 1], imageData[i + 2]);
-                colorMap.set(color, (colorMap.get(color) || 0) + 1);
-            }
-            
-            const sortedColors = [...colorMap.entries()]
-                .sort((a, b) => b[1] - a[1])
+    function extractColors(img) {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        const colorMap = new Map();
+        
+        for (let i = 0; i < imageData.length; i += 4) {
+            const color = rgbToHex(imageData[i], imageData[i + 1], imageData[i + 2]);
+            colorMap.set(color, (colorMap.get(color) || 0) + 1);
+        }
+        
+        const sortedColors = [...colorMap.entries()]
+            .sort((a, b) => b[1] - a[1])
                 .slice(0, 8)
-                .map(([color]) => color);
-            
-            colorResults.innerHTML = '';
-            sortedColors.forEach(addColorToResults);
+            .map(([color]) => color);
+        
+        colorResults.innerHTML = '';
+        sortedColors.forEach(addColorToResults);
             safeShowNotification(currentLanguage === 'ar' ? 'تم استخراج الألوان بنجاح' : 'Colors extracted successfully', 'success');
-        }
+    }
 
-        function addColorToResults(color) {
-            const colorItem = document.createElement('div');
+    function addColorToResults(color) {
+        const colorItem = document.createElement('div');
             colorItem.className = 'color-item bg-white rounded-lg shadow-md overflow-hidden';
             
             // Calculate contrast color for text
@@ -240,13 +240,13 @@ function initializeColorFeatures() {
             const brightness = (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;
             const textColor = brightness > 128 ? '#000000' : '#FFFFFF';
             
-            colorItem.innerHTML = `
+        colorItem.innerHTML = `
                 <div class="aspect-square" style="background-color: ${color};" onclick="copyToClipboard('${color}')"></div>
                 <div class="p-2 text-center text-sm font-mono" style="color: ${textColor}; background-color: ${color}">
                     ${color.toUpperCase()}
                 </div>
-            `;
-            colorResults.appendChild(colorItem);
+        `;
+        colorResults.appendChild(colorItem);
         }
 
         function hexToRgb(hex) {
@@ -262,49 +262,49 @@ function initializeColorFeatures() {
 
 // Initialize Media Downloader Features
 function initializeMediaFeatures() {
-    if (document.querySelector('[data-page="media"]')) {
+if (document.querySelector('[data-page="media"]')) {
         console.log('Initializing media features');
-        const mediaUrl = document.getElementById('mediaUrl');
-        const previewSection = document.getElementById('previewSection');
-        const preview = document.getElementById('preview');
-        const downloadHistory = document.getElementById('downloadHistory');
+    const mediaUrl = document.getElementById('mediaUrl');
+    const previewSection = document.getElementById('previewSection');
+    const preview = document.getElementById('preview');
+    const downloadHistory = document.getElementById('downloadHistory');
 
         // Add input event listener for URL checking
         mediaUrl.addEventListener('input', debounce(checkUrl, 500));
 
         async function checkUrl() {
-            const url = mediaUrl.value.trim();
-            if (!url) {
+        const url = mediaUrl.value.trim();
+        if (!url) {
                 safeShowNotification(
-                    currentLanguage === 'ar' ? 'الرجاء إدخال رابط صحيح' : 'Please enter a valid URL',
-                    'error'
-                );
-                return;
-            }
+                currentLanguage === 'ar' ? 'الرجاء إدخال رابط صحيح' : 'Please enter a valid URL',
+                'error'
+            );
+            return;
+        }
 
             try {
-                // Show loading state
+        // Show loading state
                 preview.innerHTML = '<div class="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent"></div>';
-                previewSection.classList.remove('hidden');
+        previewSection.classList.remove('hidden');
 
                 // Check if it's a YouTube URL
-                if (url.includes('youtube.com') || url.includes('youtu.be')) {
-                    const videoId = url.includes('youtu.be') 
-                        ? url.split('/').pop()
-                        : new URLSearchParams(new URL(url).search).get('v');
+            if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                const videoId = url.includes('youtu.be') 
+                    ? url.split('/').pop()
+                    : new URLSearchParams(new URL(url).search).get('v');
                     
                     if (!videoId) throw new Error('Invalid YouTube URL');
 
-                    preview.innerHTML = `
+                preview.innerHTML = `
+                    <div class="w-full max-w-2xl mx-auto aspect-video">
                         <iframe 
-                            width="100%" 
-                            height="100%" 
+                            class="w-full h-full rounded-lg shadow-lg"
                             src="https://www.youtube.com/embed/${videoId}" 
                             frameborder="0" 
-                            allowfullscreen
-                            class="absolute inset-0">
+                            allowfullscreen>
                         </iframe>
-                    `;
+                    </div>
+                `;
                 } else {
                     // For other URLs, try to fetch and check content type
                     const response = await fetch(url, { method: 'HEAD' });
@@ -323,10 +323,12 @@ function initializeMediaFeatures() {
                         `;
                     } else if (contentType.startsWith('video/')) {
                         preview.innerHTML = `
-                            <video controls class="max-w-full max-h-full">
-                                <source src="${url}" type="${contentType}">
-                                ${currentLanguage === 'ar' ? 'متصفحك لا يدعم تشغيل الفيديو' : 'Your browser does not support video playback'}
-                            </video>
+                            <div class="w-full max-w-2xl mx-auto">
+                                <video controls class="w-full h-auto rounded-lg shadow-lg">
+                                    <source src="${url}" type="${contentType}">
+                                    ${currentLanguage === 'ar' ? 'متصفحك لا يدعم تشغيل الفيديو' : 'Your browser does not support video playback'}
+                                </video>
+                            </div>
                         `;
                     } else {
                         preview.innerHTML = `
@@ -360,62 +362,96 @@ function initializeMediaFeatures() {
             }
 
             try {
+                // إظهار رسالة بدء التحميل
                 safeShowNotification(
                     currentLanguage === 'ar' ? 'جاري تحميل الوسائط...' : 'Downloading media...',
                     'info'
                 );
 
+                // التعامل مع روابط يوتيوب بشكل خاص
+                if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                    safeShowNotification(
+                        currentLanguage === 'ar' ? 'عذراً، لا يمكن تحميل فيديوهات يوتيوب مباشرة' : 'Sorry, direct YouTube downloads are not supported',
+                        'error'
+                    );
+                    return;
+                }
+
+                // محاولة تحميل الملف
                 const response = await fetch(url);
                 if (!response.ok) throw new Error('Download failed');
 
                 const contentType = response.headers.get('content-type');
                 const blob = await response.blob();
+                
+                // التحقق من حجم الملف
+                if (blob.size === 0) {
+                    throw new Error('Empty file');
+                }
+
                 const downloadUrl = window.URL.createObjectURL(blob);
                 
-                // Get filename from Content-Disposition header or URL
-                let filename = response.headers.get('content-disposition')?.split('filename=')[1]?.replace(/["']/g, '');
+                // استخراج اسم الملف من الرابط أو الهيدر
+                let filename = '';
+                const contentDisposition = response.headers.get('content-disposition');
+                if (contentDisposition) {
+                    const filenameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+                    if (filenameMatch && filenameMatch[1]) {
+                        filename = filenameMatch[1].replace(/['"]/g, '');
+                    }
+                }
+                
                 if (!filename) {
                     filename = url.split('/').pop() || 'download';
-                    // Add appropriate extension based on content type
+                    // إضافة امتداد الملف المناسب
                     if (!filename.includes('.')) {
                         const ext = contentType.split('/')[1]?.split(';')[0];
                         if (ext) filename += '.' + ext;
                     }
                 }
 
+                // إنشاء رابط التحميل وتنفيذه
                 const a = document.createElement('a');
                 a.href = downloadUrl;
                 a.download = filename;
+                a.style.display = 'none';
                 document.body.appendChild(a);
                 a.click();
-                document.body.removeChild(a);
-                window.URL.revokeObjectURL(downloadUrl);
+                
+                // تنظيف الموارد
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(downloadUrl);
+                }, 100);
 
                 safeShowNotification(
                     currentLanguage === 'ar' ? 'تم التحميل بنجاح' : 'Download successful',
                     'success'
                 );
+
+                // إضافة إلى السجل
+                addToDownloadHistory(url, filename);
             } catch (error) {
                 console.error('Download error:', error);
                 safeShowNotification(
-                    currentLanguage === 'ar' ? 'فشل التحميل' : 'Download failed',
+                    currentLanguage === 'ar' ? 'فشل التحميل: ' + (error.message || 'خطأ غير معروف') : 'Download failed: ' + (error.message || 'Unknown error'),
                     'error'
                 );
             }
         }
 
-        function addToDownloadHistory(url) {
+        function addToDownloadHistory(url, filename) {
             const historyItem = document.createElement('div');
             historyItem.className = 'bg-white rounded-lg p-4 shadow border-r-4 border-blue-500';
             
-            const filename = url.split('/').pop() || 'download';
             historyItem.innerHTML = `
                 <div class="flex justify-between items-center">
                     <div class="flex-1 min-w-0">
                         <p class="text-sm text-gray-500 mb-1">${new Date().toLocaleTimeString()}</p>
-                        <p class="truncate" title="${url}">${filename}</p>
+                        <p class="truncate" title="${filename}">${filename}</p>
+                        <p class="text-xs text-gray-400 truncate" title="${url}">${url}</p>
                     </div>
-                    <div class="flex gap-2 ml-4">
+                    <div class="flex gap-2 mr-4">
                         <button onclick="window.open('${url}')" class="text-blue-600 hover:text-blue-800 p-1" title="${
                             currentLanguage === 'ar' ? 'فتح الرابط' : 'Open URL'
                         }">
@@ -639,7 +675,7 @@ function copyToClipboard(text) {
         navigator.clipboard.writeText(text).then(() => {
             safeShowNotification(
                 currentLanguage === 'ar' ? 'تم النسخ بنجاح' : 'Copied successfully',
-                'success'
+            'success'
             );
         }).catch(() => {
             safeShowNotification(

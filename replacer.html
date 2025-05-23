@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تبديل العلامات | Symbol Replacer</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 min-h-screen" data-page="replacer">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8 rtl:space-x-reverse">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 transition">
+                        <i class="fas fa-arrow-right rtl:fa-arrow-left text-xl"></i>
+                    </a>
+                    <h1 class="text-xl font-bold text-gray-800" data-ar="تبديل العلامات" data-en="Symbol Replacer">تبديل العلامات</h1>
+                </div>
+                <a href="lang.html" class="text-gray-600 hover:text-blue-600 transition">
+                    <i class="fas fa-language text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-12 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <!-- Input Section -->
+                <div class="p-6">
+                    <h2 class="text-lg font-semibold mb-4" data-ar="النص المدخل" data-en="Input Text">النص المدخل</h2>
+                    <textarea 
+                        id="symbolInput" 
+                        class="w-full h-48 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" 
+                        dir="auto"
+                        data-ar-placeholder="اكتب النص هنا..."
+                        data-en-placeholder="Type your text here..."></textarea>
+                </div>
+
+                <!-- Actions Section -->
+                <div class="p-6 bg-gray-50 flex flex-wrap gap-4">
+                    <button onclick="replaceSymbols('-', ' ')" class="action-btn flex-1">
+                        <i class="fas fa-minus ml-2"></i>
+                        <span data-ar="تبديل العلامات (-) بمسافات" data-en="Replace (-) with spaces">تبديل العلامات (-) بمسافات</span>
+                    </button>
+                    <button onclick="replaceSymbols('_', ' ')" class="action-btn flex-1">
+                        <i class="fas fa-underscore ml-2"></i>
+                        <span data-ar="تبديل العلامات (_) بمسافات" data-en="Replace (_) with spaces">تبديل العلامات (_) بمسافات</span>
+                    </button>
+                </div>
+
+                <!-- History Section -->
+                <div class="p-6 border-t border-gray-200">
+                    <h2 class="text-lg font-semibold mb-4" data-ar="السجل" data-en="History">السجل</h2>
+                    <div id="history" class="space-y-3">
+                        <!-- History items will be added here dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html> 

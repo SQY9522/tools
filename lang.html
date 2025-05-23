@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختيار اللغة | Language Selection</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center" data-page="lang">
+    <div class="max-w-md w-full mx-4">
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="p-6 text-center">
+                <h1 class="text-2xl font-bold mb-8">
+                    <span class="block mb-2">اختر لغتك المفضلة</span>
+                    <span class="block text-gray-600">Choose your preferred language</span>
+                </h1>
+
+                <div class="grid grid-cols-2 gap-6">
+                    <!-- Arabic -->
+                    <button onclick="setLanguage('ar')" class="lang-btn group">
+                        <img src="https://flagcdn.com/sa.svg" alt="Arabic" class="w-16 h-16 rounded-lg shadow-md mb-4 group-hover:scale-110 transition">
+                        <span class="block font-semibold">العربية</span>
+                        <span class="block text-sm text-gray-500">Arabic</span>
+                    </button>
+
+                    <!-- English -->
+                    <button onclick="setLanguage('en')" class="lang-btn group">
+                        <img src="https://flagcdn.com/gb.svg" alt="English" class="w-16 h-16 rounded-lg shadow-md mb-4 group-hover:scale-110 transition">
+                        <span class="block font-semibold">English</span>
+                        <span class="block text-sm text-gray-500">الإنجليزية</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

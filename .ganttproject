@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><ganttproject-options version="3.2.3247">
+    <colors resources="#8cb6ce" resourcesOverload="#e53232" resourcesUnderload="#32e532" weekEnd="#808080" daysOff="#e6ff2b"/>
+    <geometry x="-8" y="-8" width="1936" height="1048" maximized="true"/>
+    <toolBar position="0" icon-size="16" show="0"/>
+    <statusBar show="true"/>
+    <export name="true" complete="true" border3d="false" relations="true"/>
+    <csv-export>
+        <csv-general fixed="false" separatedChar="," separatedTextChar="&quot;"/>
+    </csv-export>
+    <view id="csv-export">
+        <field id="tpd10"/>
+        <field id="tpd3"/>
+        <field id="tpd4"/>
+        <field id="tpd5"/>
+        <field id="tpd6"/>
+        <field id="tpd7"/>
+        <field id="tpd12"/>
+        <field id="tpd8"/>
+        <field id="tpd9"/>
+        <field id="tpd11"/>
+        <field id="tpd13"/>
+        <field id="tpd14"/>
+        <field id="webLink"/>
+        <field id="notes"/>
+        <resources>
+            <field id="id"/>
+            <field id="0"/>
+            <field id="1"/>
+            <field id="2"/>
+            <field id="3"/>
+            <field id="4"/>
+            <field id="5"/>
+            <field id="6"/>
+            <field id="7"/>
+        </resources>
+    </view>
+    <automatic-launch value="false"/>
+    <lockdavminutes value="240"/>
+    <xsl-dir dir="file:/C:/Program%20Files%20(x86)/GanttProject-3.2/plugins/update-3247/ganttproject/resources/xslt"/>
+    <xsl-fo file="file:/C:/Program%20Files%20(x86)/GanttProject-3.2/plugins/update-3247/ganttproject/resources/xslfo/ganttproject.xsl"/>
+    <working-dir dir="C:\Users\SQY"/>
+    <files/>
+    <roles roleset-name="Default">
+        <role id="0" name="undefined"/>
+        <role id="1" name="project manager"/>
+    </roles>
+    <roles roleset-name="SoftwareDevelopment">
+        <role id="2" name="developer"/>
+        <role id="3" name="doc writer&#9;"/>
+        <role id="4" name="tester"/>
+        <role id="5" name="graphic designer"/>
+        <role id="6" name="doc translator"/>
+        <role id="7" name="packager (.rpm, .tgz, ...)"/>
+        <role id="8" name="تحليل"/>
+        <role id="9" name="web designer"/>
+        <role id="10" name="no specific role"/>
+    </roles>
+    <option id="ui.laf" value="Plastic"/>
+    <option id="ui.appFontSpec" value="Dialog-NORMAL"/>
+    <option id="ui.chartFontSpec" value="Dialog-NORMAL"/>
+    <option id="ui.screenDpi" value="96"/>
+    <option id="ui.language" value="ar_SA"/>
+    <option id="ui.ui.dateFormat.switch" value="true"/>
+    <option id="ui.ui.dateFormat.short" value="d‏/M‏/y"/>
+    <option id="ui.ui.dateFormat.sample" value="٣٠‏/٨‏/٢٠٢٣"/>
+    <option id="rss.rss.checkUpdates" value="false"/>
+    <option id="ganttChartDefaults.taskNamePrefix" value="مهمة"/>
+    <option id="ganttChartDefaults.taskCopyNamePrefix" value="{0}_{1}"/>
+    <option id="ganttChartDefaults.taskDefaultColor" value="#8cb6ce"/>
+    <option id="ganttChartDefaults.dependencyDefaultHardness" value="Strong"/>
+    <option id="ganttChartGridDetails.showTodayLine" value="false"/>
+    <option id="ganttChartGridDetails.showProjectDates" value="false"/>
+    <option id="ganttChartGridDetails.chart.styles">
+        <![CDATA[
+
+]]>
+    </option>
+    <option id="timelineLabels.timeline.showMilestones" value="true"/>
+    <option id="resourceChartColors.resourceChartColors.normalLoad" value="#8cb6ce"/>
+    <option id="resourceChartColors.resourceChartColors.overLoad" value="#e53232"/>
+    <option id="resourceChartColors.resourceChartColors.underLoad" value="#32e532"/>
+    <option id="resourceChartColors.resourceChartColors.dayOff" value="#e6ff2b"/>
+    <option id=".working-dir" value="C:\Users\SQY"/>
+    <option id=".last-webdav-document" value=""/>
+    <option id=".webdav.lockTimeout" value="-1"/>
+    <option id="webdav.servers"/>
+    <option id="webdav.lockRelease" value="true"/>
+    <option id="webdav.proxy" value=""/>
+    <option id="ganttproject-cloud.defaultOfflineMode" value="true"/>
+    <option id="ganttproject-cloud.validity" value=""/>
+    <option id="ganttproject-cloud.files">
+        <![CDATA[
+
+]]>
+    </option>
+    <option id="updateRss.check" value="UNDEFINED"/>
+    <option id="updateRss.lastCheck" value="2023-08-30"/>
+    <option id="platform.update.checkEnabled" value="true"/>
+    <option id="platform.update.url" value="https://www.ganttproject.biz/dl/updates/ganttproject-3.0.json"/>
+    <option id="task.scheduler.disabled" value="false"/>
+    <option id="ui.taskRowPadding" value="20.0"/>
+    <configuration/>
+    <instance/>
+</ganttproject-options>

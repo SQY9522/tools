@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحميل الوسائط | Media Downloader</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 min-h-screen" data-page="media">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8 rtl:space-x-reverse">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 transition">
+                        <i class="fas fa-arrow-right rtl:fa-arrow-left text-xl"></i>
+                    </a>
+                    <h1 class="text-xl font-bold text-gray-800" data-ar="تحميل الوسائط" data-en="Media Downloader">تحميل الوسائط</h1>
+                </div>
+                <a href="lang.html" class="text-gray-600 hover:text-blue-600 transition">
+                    <i class="fas fa-language text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-12 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <!-- URL Input Section -->
+                <div class="p-6">
+                    <h2 class="text-lg font-semibold mb-4" data-ar="رابط الوسائط" data-en="Media URL">رابط الوسائط</h2>
+                    <div class="flex gap-4">
+                        <input 
+                            type="text" 
+                            id="mediaUrl" 
+                            class="flex-1 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                            dir="ltr"
+                            data-ar-placeholder="أدخل رابط الوسائط هنا..."
+                            data-en-placeholder="Enter media URL here...">
+                        <button onclick="checkUrl()" class="action-btn whitespace-nowrap">
+                            <i class="fas fa-search ml-2"></i>
+                            <span data-ar="فحص الرابط" data-en="Check URL">فحص الرابط</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Preview Section -->
+                <div id="previewSection" class="p-6 border-t border-gray-200 hidden">
+                    <h2 class="text-lg font-semibold mb-4" data-ar="معاينة" data-en="Preview">معاينة</h2>
+                    <div class="aspect-w-16 aspect-h-9 bg-gray-100 rounded-lg overflow-hidden">
+                        <div id="preview" class="w-full h-full flex items-center justify-center">
+                            <!-- Preview content will be added here -->
+                        </div>
+                    </div>
+                    <div class="mt-4 flex gap-4">
+                        <button onclick="downloadMedia()" class="action-btn flex-1">
+                            <i class="fas fa-download ml-2"></i>
+                            <span data-ar="تحميل" data-en="Download">تحميل</span>
+                        </button>
+                        <button onclick="copyUrl()" class="action-btn flex-1">
+                            <i class="fas fa-copy ml-2"></i>
+                            <span data-ar="نسخ الرابط" data-en="Copy URL">نسخ الرابط</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Download History -->
+                <div class="p-6 bg-gray-50">
+                    <h2 class="text-lg font-semibold mb-4" data-ar="سجل التحميل" data-en="Download History">سجل التحميل</h2>
+                    <div id="downloadHistory" class="space-y-3">
+                        <!-- History items will be added here dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Supported Sites -->
+            <div class="mt-8 bg-white rounded-2xl shadow-lg p-6">
+                <h2 class="text-lg font-semibold mb-4" data-ar="المواقع المدعومة" data-en="Supported Sites">المواقع المدعومة</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    <div class="site-card">
+                        <i class="fab fa-youtube text-red-600"></i>
+                        <span>YouTube</span>
+                    </div>
+                    <div class="site-card">
+                        <i class="fab fa-twitter text-blue-400"></i>
+                        <span>Twitter</span>
+                    </div>
+                    <div class="site-card">
+                        <i class="fab fa-instagram text-pink-600"></i>
+                        <span>Instagram</span>
+                    </div>
+                    <div class="site-card">
+                        <i class="fab fa-tiktok text-black"></i>
+                        <span>TikTok</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html> 

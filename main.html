@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أدوات متعددة | Multiple Tools</title>
+    <link href="https://cdn.js  delivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-blue-500 to-blue-700 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white/10 backdrop-blur-md fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <h1 class="text-xl font-bold text-white" data-ar="الأدوات المتعددة" data-en="Multiple Tools">الأدوات المتعددة</h1>
+                <a href="/lang" class="text-white hover:text-blue-200 transition">
+                    <i class="fas fa-language text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-12 px-4">
+        <div class="max-w-6xl mx-auto">
+            <!-- Hero Section -->
+            <div class="text-center text-white mb-16">
+                <h1 class="text-5xl font-bold mb-6" data-ar="مجموعة من الأدوات المفيدة" data-en="Collection of Useful Tools">
+                    مجموعة من الأدوات المفيدة
+                </h1>
+                <p class="text-xl opacity-90" data-ar="اختر الأداة التي تريد استخدامها" data-en="Choose the tool you want to use">
+                    اختر الأداة التي تريد استخدامها
+                </p>
+            </div>
+
+            <!-- Tools Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Color Picker Tool -->
+                <a href="/color" class="tool-card group">
+                    <div class="relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="relative">
+                            <div class="mb-6 inline-block rounded-full bg-blue-100 p-4">
+                                <i class="fas fa-palette text-3xl text-blue-600"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3" data-ar="استخراج الألوان" data-en="Color Picker">استخراج الألوان</h3>
+                            <p class="text-gray-600" data-ar="استخرج الألوان من الصور أو اختر لون مباشرة" data-en="Extract colors from images or pick colors directly">
+                                استخرج الألوان من الصور أو اختر لون مباشرة
+                            </p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Text Replacer Tool -->
+                <a href="/replacer" class="tool-card group">
+                    <div class="relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+                        <div class="absolute inset-0 bg-gradient-to-br from-green-500/5 to-green-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="relative">
+                            <div class="mb-6 inline-block rounded-full bg-green-100 p-4">
+                                <i class="fas fa-exchange-alt text-3xl text-green-600"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3" data-ar="تبديل العلامات" data-en="Symbol Replacer">تبديل العلامات</h3>
+                            <p class="text-gray-600" data-ar="استبدل العلامات بمسافات بسهولة" data-en="Replace symbols with spaces easily">
+                                استبدل العلامات بمسافات بسهولة
+                            </p>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Media Downloader Tool -->
+                <a href="/media" class="tool-card group">
+                    <div class="relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="relative">
+                            <div class="mb-6 inline-block rounded-full bg-purple-100 p-4">
+                                <i class="fas fa-download text-3xl text-purple-600"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3" data-ar="تحميل الوسائط" data-en="Media Downloader">تحميل الوسائط</h3>
+                            <p class="text-gray-600" data-ar="حمل الصور والفيديوهات من مواقع مختلفة" data-en="Download media from various websites">
+                                حمل الصور والفيديوهات من مواقع مختلفة
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google</title>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="/" class="logo">
+        <img src="/assets/images/logo.png" alt="Google">
+      </a>
+      <nav>
+        <a href="/search">البحث</a>
+        <a href="/maps">الخرائط</a>
+        <a href="/mail">البريد الإلكتروني</a>
+        <a href="/drive">Drive</a>
+        <a href="/calendar">التقويم</a>
+        <a href="/news">الأخبار</a>
+        <a href="/translate">الترجمة</a>
+        <a href="/ads">الإعلانات</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <section class="search">
+        <form action="/search" method="get">
+          <input type="text" name="q" placeholder="ابحث عن شيء ما">
+          <button type="submit">بحث</button>
+        </form>
+      </section>
+      <section class="results">
+        <h2>نتائج البحث</h2>
+        <ul>
+          <li>
+            <a href="#">الصفحة الأولى من نتائج البحث</a>
+          </li>
+          <li>
+            <a href="#">الصفحة الثانية من نتائج البحث</a>
+          </li>
+          <li>
+            <a href="#">الصفحة الثالثة من نتائج البحث</a>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </main>
+  <footer>
+    <div class="container">
+      <p>
+        Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA
+      </p>
+      <ul>
+        <li><a href="#">الخصوصية</a></li>
+        <li><a href="#">الشروط</a></li>
+        <li><a href="#">الدعم</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

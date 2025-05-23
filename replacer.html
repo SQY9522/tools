@@ -8,63 +8,70 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="styles.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50 min-h-screen" data-page="replacer">
+<body class="bg-gradient-to-br from-blue-500 to-blue-700 min-h-screen" data-page="replacer">
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+    <nav class="bg-white/10 backdrop-blur-md fixed w-full top-0 z-50">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
-                <div class="flex items-center space-x-8 rtl:space-x-reverse">
-                    <a href="index.html" class="text-gray-700 hover:text-blue-600 transition flex items-center gap-2">
-                        <img src="logo.png" alt="Digital Tools" class="h-8 w-8">
-                        <span class="text-sm font-medium" data-ar="الرئيسية" data-en="Home">الرئيسية</span>
+                <div class="flex items-center gap-3">
+                    <a href="index.html">
+                        <img src="logo.svg" alt="Digital Tools" class="h-10 w-10">
                     </a>
-                    <h1 class="text-xl font-bold text-gray-800" data-ar="تبديل العلامات" data-en="Symbol Replacer">تبديل العلامات</h1>
+                    <h1 class="text-xl font-bold text-white" data-ar="تبديل العلامات" data-en="Symbol Replacer">تبديل العلامات</h1>
                 </div>
-                <a href="lang.html" class="text-gray-600 hover:text-blue-600 transition">
-                    <i class="fas fa-language text-xl"></i>
+                <a href="index.html" class="text-white hover:text-blue-200 transition">
+                    <i class="fas fa-home text-xl"></i>
                 </a>
             </div>
         </div>
     </nav>
 
-    <!-- Floating Back Button (Mobile) -->
-    <a href="index.html" class="fixed bottom-6 right-6 rtl:left-6 rtl:right-auto bg-white shadow-lg rounded-full p-4 text-gray-700 hover:text-blue-600 transition-all hover:shadow-xl md:hidden z-50">
-        <i class="fas fa-home text-xl"></i>
-    </a>
-
     <!-- Main Content -->
     <main class="pt-24 pb-12 px-4">
-        <div class="max-w-4xl mx-auto">
-            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+        <div class="max-w-3xl mx-auto">
+            <div class="bg-white rounded-xl shadow-lg p-6">
                 <!-- Input Section -->
-                <div class="p-6">
-                    <h2 class="text-lg font-semibold mb-4" data-ar="النص المدخل" data-en="Input Text">النص المدخل</h2>
-                    <textarea 
-                        id="symbolInput" 
-                        class="w-full h-48 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" 
-                        dir="auto"
-                        data-ar-placeholder="اكتب النص هنا..."
-                        data-en-placeholder="Type your text here..."></textarea>
+                <div class="mb-6">
+                    <label for="symbolInput" class="block text-gray-700 font-medium mb-2" data-ar="النص المراد معالجته" data-en="Text to Process">النص المراد معالجته</label>
+                    <textarea id="symbolInput" rows="4" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 resize-none" data-ar-placeholder="اكتب أو الصق النص هنا..." data-en-placeholder="Type or paste your text here..."></textarea>
                 </div>
 
-                <!-- Actions Section -->
-                <div class="p-6 bg-gray-50 flex flex-wrap gap-4">
-                    <button onclick="replaceSymbols('-', ' ')" class="action-btn flex-1">
-                        <i class="fas fa-minus ml-2"></i>
-                        <span data-ar="تبديل العلامات (-) بمسافات" data-en="Replace (-) with spaces">تبديل العلامات (-) بمسافات</span>
+                <!-- Controls -->
+                <div class="flex flex-wrap gap-4 mb-6">
+                    <button onclick="replaceSymbols('-', ' ')" class="btn btn-primary">
+                        <span data-ar="تبديل - بمسافة" data-en="Replace - with space">تبديل - بمسافة</span>
                     </button>
-                    <button onclick="replaceSymbols('_', ' ')" class="action-btn flex-1">
-                        <i class="fas fa-underscore ml-2"></i>
-                        <span data-ar="تبديل العلامات (_) بمسافات" data-en="Replace (_) with spaces">تبديل العلامات (_) بمسافات</span>
+                    <button onclick="replaceSymbols('_', ' ')" class="btn btn-primary">
+                        <span data-ar="تبديل _ بمسافة" data-en="Replace _ with space">تبديل _ بمسافة</span>
                     </button>
+                    <button onclick="replaceSymbols('.', ' ')" class="btn btn-primary">
+                        <span data-ar="تبديل . بمسافة" data-en="Replace . with space">تبديل . بمسافة</span>
+                    </button>
+                    <button onclick="clearText()" class="btn btn-error">
+                        <span data-ar="مسح النص" data-en="Clear Text">مسح النص</span>
+                    </button>
+                    <button onclick="finalizeText()" class="btn bg-green-500 hover:bg-green-600 text-white w-full mt-2">
+                        <i class="fas fa-check ml-2"></i>
+                        <span data-ar="تم" data-en="Done">تم</span>
+                    </button>
+                </div>
+
+                <!-- Output Section -->
+                <div id="outputSection" class="mb-6 hidden">
+                    <label class="block text-gray-700 font-medium mb-2" data-ar="النص بعد المعالجة" data-en="Processed Text">النص بعد المعالجة</label>
+                    <div id="outputText" class="p-3 bg-gray-50 rounded-lg min-h-[100px] whitespace-pre-wrap"></div>
+                    <div class="mt-3 flex justify-end">
+                        <button onclick="copyOutput()" class="btn btn-secondary">
+                            <i class="fas fa-copy mr-2"></i>
+                            <span data-ar="نسخ النص" data-en="Copy Text">نسخ النص</span>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- History Section -->
-                <div class="p-6 border-t border-gray-200">
-                    <h2 class="text-lg font-semibold mb-4" data-ar="السجل" data-en="History">السجل</h2>
-                    <div id="history" class="space-y-3">
-                        <!-- History items will be added here dynamically -->
-                    </div>
+                <div>
+                    <h3 class="text-gray-700 font-medium mb-3" data-ar="السجل" data-en="History">السجل</h3>
+                    <div id="history" class="space-y-2"></div>
                 </div>
             </div>
         </div>

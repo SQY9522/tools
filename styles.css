@@ -219,33 +219,57 @@ body {
 /* Notifications */
 .notification {
     position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-    padding: 1rem;
-    border-radius: var(--border-radius);
-    background-color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    z-index: 40;
-    transition: opacity var(--transition-duration);
-    max-width: 24rem;
-}
-
-[dir="rtl"] .notification {
-    right: auto;
-    left: 1rem;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    z-index: 1000;
+    opacity: 0;
+    animation: notificationSlide 0.5s ease forwards;
 }
 
 .notification.success {
-    background-color: var(--success-color);
-    color: white;
+    background-color: rgba(34, 197, 94, 0.9);
+    backdrop-filter: blur(4px);
 }
 
 .notification.error {
-    background-color: var(--error-color);
-    color: white;
+    background-color: rgba(239, 68, 68, 0.9);
+    backdrop-filter: blur(4px);
+}
+
+.notification.hide {
+    animation: notificationFade 0.5s ease forwards;
+}
+
+@keyframes notificationSlide {
+    0% {
+        transform: translate(-50%, -100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+
+@keyframes notificationFade {
+    0% {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -100%);
+        opacity: 0;
+    }
+}
+
+/* RTL Support for Notifications */
+html[dir="rtl"] .notification {
+    font-family: 'Cairo', sans-serif;
 }
 
 /* Form Controls */

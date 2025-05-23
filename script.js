@@ -103,13 +103,32 @@ if (document.querySelector('[data-page="color"]')) {
     const colorPicker = document.getElementById('colorPicker');
     const imageInput = document.getElementById('imageInput');
     const colorResults = document.getElementById('colorResults');
-    const dragZone = document.querySelector('.drag-zone');
+    const currentColorPreview = document.getElementById('currentColorPreview');
+    const currentColorCode = document.getElementById('currentColorCode');
+    const imagePreview = document.getElementById('imagePreview');
+    const uploadedImage = document.getElementById('uploadedImage');
+    const dragZone = document.querySelector('.border-dashed');
 
     // Handle direct color picker
+    colorPicker.addEventListener('input', (e) => {
+        const color = e.target.value;
+        updateCurrentColor(color);
+    });
+
     colorPicker.addEventListener('change', (e) => {
         const color = e.target.value;
         addColorToResults(color);
     });
+
+    function updateCurrentColor(color) {
+        currentColorPreview.style.backgroundColor = color;
+        currentColorCode.textContent = color.toUpperCase();
+        
+        // Calculate contrast color for text
+        const rgb = hexToRgb(color);
+        const brightness = (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;
+        currentColorPreview.style.color = brightness > 128 ? '#000000' : '#FFFFFF';
+    }
 
     // Handle image upload
     imageInput.addEventListener('change', handleImageUpload);
@@ -117,16 +136,19 @@ if (document.querySelector('[data-page="color"]')) {
     // Drag and drop
     dragZone.addEventListener('dragover', (e) => {
         e.preventDefault();
-        dragZone.classList.add('dragging');
+        dragZone.classList.add('border-blue-500');
+        dragZone.classList.add('bg-blue-50');
     });
 
     dragZone.addEventListener('dragleave', () => {
-        dragZone.classList.remove('dragging');
+        dragZone.classList.remove('border-blue-500');
+        dragZone.classList.remove('bg-blue-50');
     });
 
     dragZone.addEventListener('drop', (e) => {
         e.preventDefault();
-        dragZone.classList.remove('dragging');
+        dragZone.classList.remove('border-blue-500');
+        dragZone.classList.remove('bg-blue-50');
         const file = e.dataTransfer.files[0];
         if (file && file.type.startsWith('image/')) {
             handleImageFile(file);
@@ -143,6 +165,8 @@ if (document.querySelector('[data-page="color"]')) {
     function handleImageFile(file) {
         const reader = new FileReader();
         reader.onload = (e) => {
+            uploadedImage.src = e.target.result;
+            imagePreview.classList.remove('hidden');
             const img = new Image();
             img.onload = () => extractColors(img);
             img.src = e.target.result;
@@ -167,7 +191,7 @@ if (document.querySelector('[data-page="color"]')) {
         
         const sortedColors = [...colorMap.entries()]
             .sort((a, b) => b[1] - a[1])
-            .slice(0, 5)
+            .slice(0, 8)
             .map(([color]) => color);
         
         colorResults.innerHTML = '';
@@ -177,12 +201,29 @@ if (document.querySelector('[data-page="color"]')) {
 
     function addColorToResults(color) {
         const colorItem = document.createElement('div');
-        colorItem.className = 'color-item';
+        colorItem.className = 'color-item bg-white rounded-lg shadow-md overflow-hidden';
+        
+        // Calculate contrast color for text
+        const rgb = hexToRgb(color);
+        const brightness = (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;
+        const textColor = brightness > 128 ? '#000000' : '#FFFFFF';
+        
         colorItem.innerHTML = `
-            <div style="background-color: ${color}; height: 80%;" onclick="copyToClipboard('${color}')"></div>
-            <div class="color-info">${color}</div>
+            <div class="aspect-square" style="background-color: ${color};" onclick="copyToClipboard('${color}')"></div>
+            <div class="p-2 text-center text-sm font-mono" style="color: ${textColor}; background-color: ${color}">
+                ${color.toUpperCase()}
+            </div>
         `;
         colorResults.appendChild(colorItem);
+    }
+
+    function hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
     }
 }
 

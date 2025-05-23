@@ -14,8 +14,9 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center space-x-8 rtl:space-x-reverse">
-                    <a href="index.html" class="text-gray-700 hover:text-blue-600 transition">
-                        <i class="fas fa-arrow-right rtl:fa-arrow-left text-xl"></i>
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 transition flex items-center gap-2">
+                        <img src="logo.png" alt="Digital Tools" class="h-8 w-8">
+                        <span class="text-sm font-medium" data-ar="الرئيسية" data-en="Home">الرئيسية</span>
                     </a>
                     <h1 class="text-xl font-bold text-gray-800" data-ar="استخراج الألوان" data-en="Color Picker">استخراج الألوان</h1>
                 </div>
@@ -26,6 +27,11 @@
         </div>
     </nav>
 
+    <!-- Floating Back Button (Mobile) -->
+    <a href="index.html" class="fixed bottom-6 right-6 rtl:left-6 rtl:right-auto bg-white shadow-lg rounded-full p-4 text-gray-700 hover:text-blue-600 transition-all hover:shadow-xl md:hidden z-50">
+        <i class="fas fa-home text-xl"></i>
+    </a>
+
     <!-- Main Content -->
     <main class="pt-24 pb-12 px-4">
         <div class="max-w-4xl mx-auto">
@@ -33,27 +39,40 @@
                 <!-- Color Picker Section -->
                 <div class="p-6 border-b border-gray-200">
                     <h2 class="text-lg font-semibold mb-4" data-ar="اختيار لون مباشر" data-en="Direct Color Picker">اختيار لون مباشر</h2>
-                    <input type="color" id="colorPicker" class="w-full h-16 rounded-lg cursor-pointer">
+                    <div class="flex flex-col sm:flex-row gap-4 items-center">
+                        <div class="w-full sm:w-1/2">
+                            <input type="color" id="colorPicker" class="w-full h-16 rounded-lg cursor-pointer">
+                        </div>
+                        <div class="w-full sm:w-1/2 text-center">
+                            <div id="currentColorPreview" class="h-16 rounded-lg shadow-inner mb-2"></div>
+                            <div id="currentColorCode" class="font-mono text-sm"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Image Upload Section -->
-                <div class="p-6">
+                <div class="p-6 border-b border-gray-200">
                     <h2 class="text-lg font-semibold mb-4" data-ar="استخراج من صورة" data-en="Extract from Image">استخراج من صورة</h2>
-                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center relative">
                         <input type="file" accept="image/*" id="imageInput" class="hidden">
-                        <label for="imageInput" class="cursor-pointer">
+                        <label for="imageInput" class="cursor-pointer block">
                             <i class="fas fa-cloud-upload-alt text-4xl text-blue-500 mb-4"></i>
                             <p class="text-gray-600" data-ar="اسحب الصورة هنا أو اضغط للاختيار" data-en="Drop image here or click to select">
                                 اسحب الصورة هنا أو اضغط للاختيار
                             </p>
                         </label>
+                        <div id="imagePreview" class="mt-4 hidden">
+                            <img id="uploadedImage" class="max-h-48 mx-auto rounded-lg shadow-md" alt="معاينة الصورة">
+                        </div>
                     </div>
                 </div>
 
                 <!-- Results Section -->
                 <div class="p-6 bg-gray-50">
                     <h2 class="text-lg font-semibold mb-4" data-ar="الألوان المستخرجة" data-en="Extracted Colors">الألوان المستخرجة</h2>
-                    <div id="colorResults" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4"></div>
+                    <div id="colorResults" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                        <!-- Color items will be added here dynamically -->
+                    </div>
                 </div>
             </div>
         </div>

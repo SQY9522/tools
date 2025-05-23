@@ -263,14 +263,16 @@ function initializeColorFeatures() {
 // Initialize Media Downloader Features
 function initializeMediaFeatures() {
     if (document.querySelector('[data-page="media"]')) {
-        // Media downloader specific initialization
         console.log('Initializing media features');
         const mediaUrl = document.getElementById('mediaUrl');
         const previewSection = document.getElementById('previewSection');
         const preview = document.getElementById('preview');
         const downloadHistory = document.getElementById('downloadHistory');
 
-        function checkUrl() {
+        // Add input event listener for URL checking
+        mediaUrl.addEventListener('input', debounce(checkUrl, 500));
+
+        async function checkUrl() {
             const url = mediaUrl.value.trim();
             if (!url) {
                 safeShowNotification(
@@ -281,8 +283,75 @@ function initializeMediaFeatures() {
             }
 
             try {
-                new URL(url); // Validate URL format
-            } catch (e) {
+                // Show loading state
+                preview.innerHTML = '<div class="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent"></div>';
+                previewSection.classList.remove('hidden');
+
+                // Check if it's a YouTube URL
+                if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                    const videoId = url.includes('youtu.be') 
+                        ? url.split('/').pop()
+                        : new URLSearchParams(new URL(url).search).get('v');
+                    
+                    if (!videoId) throw new Error('Invalid YouTube URL');
+
+                    preview.innerHTML = `
+                        <iframe 
+                            width="100%" 
+                            height="100%" 
+                            src="https://www.youtube.com/embed/${videoId}" 
+                            frameborder="0" 
+                            allowfullscreen
+                            class="absolute inset-0">
+                        </iframe>
+                    `;
+                } else {
+                    // For other URLs, try to fetch and check content type
+                    const response = await fetch(url, { method: 'HEAD' });
+                    if (!response.ok) throw new Error('Invalid URL');
+                    
+                    const contentType = response.headers.get('content-type');
+                    
+                    if (contentType.startsWith('image/')) {
+                        preview.innerHTML = `
+                            <img src="${url}" 
+                                alt="Media preview" 
+                                class="max-w-full max-h-full object-contain"
+                                onerror="this.onerror=null; this.src=''; safeShowNotification('${
+                                    currentLanguage === 'ar' ? 'فشل تحميل الصورة' : 'Failed to load image'
+                                }', 'error');">
+                        `;
+                    } else if (contentType.startsWith('video/')) {
+                        preview.innerHTML = `
+                            <video controls class="max-w-full max-h-full">
+                                <source src="${url}" type="${contentType}">
+                                ${currentLanguage === 'ar' ? 'متصفحك لا يدعم تشغيل الفيديو' : 'Your browser does not support video playback'}
+                            </video>
+                        `;
+                    } else {
+                        preview.innerHTML = `
+                            <div class="text-center p-4">
+                                <i class="fas fa-file text-4xl text-gray-400 mb-2"></i>
+                                <p class="text-gray-600">${contentType}</p>
+                            </div>
+                        `;
+                    }
+                }
+
+                addToDownloadHistory(url);
+            } catch (error) {
+                console.error('Error checking URL:', error);
+                safeShowNotification(
+                    currentLanguage === 'ar' ? 'الرابط غير صحيح' : 'Invalid URL',
+                    'error'
+                );
+                previewSection.classList.add('hidden');
+            }
+        }
+
+        async function downloadMedia() {
+            const url = mediaUrl.value.trim();
+            if (!url) {
                 safeShowNotification(
                     currentLanguage === 'ar' ? 'الرجاء إدخال رابط صحيح' : 'Please enter a valid URL',
                     'error'
@@ -290,72 +359,106 @@ function initializeMediaFeatures() {
                 return;
             }
 
-            // Show loading state
-            preview.innerHTML = '<div class="loading-spinner"></div>';
-            previewSection.classList.remove('hidden');
+            try {
+                safeShowNotification(
+                    currentLanguage === 'ar' ? 'جاري تحميل الوسائط...' : 'Downloading media...',
+                    'info'
+                );
 
-            // Simulate API call (replace with actual API integration)
-            setTimeout(() => {
-                try {
-                    if (url.includes('youtube.com') || url.includes('youtu.be')) {
-                        const videoId = url.includes('youtu.be') 
-                            ? url.split('/').pop()
-                            : new URLSearchParams(new URL(url).search).get('v');
-                        preview.innerHTML = `
-                            <iframe 
-                                width="100%" 
-                                height="100%" 
-                                src="https://www.youtube.com/embed/${videoId}" 
-                                frameborder="0" 
-                                allowfullscreen>
-                            </iframe>
-                        `;
-                    } else {
-                        preview.innerHTML = `
-                            <img src="${url}" alt="Media preview" class="w-full h-full object-contain" onerror="this.onerror=null; this.src=''; safeShowNotification('${currentLanguage === 'ar' ? 'فشل تحميل الصورة' : 'Failed to load image'}', 'error');">
-                        `;
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Download failed');
+
+                const contentType = response.headers.get('content-type');
+                const blob = await response.blob();
+                const downloadUrl = window.URL.createObjectURL(blob);
+                
+                // Get filename from Content-Disposition header or URL
+                let filename = response.headers.get('content-disposition')?.split('filename=')[1]?.replace(/["']/g, '');
+                if (!filename) {
+                    filename = url.split('/').pop() || 'download';
+                    // Add appropriate extension based on content type
+                    if (!filename.includes('.')) {
+                        const ext = contentType.split('/')[1]?.split(';')[0];
+                        if (ext) filename += '.' + ext;
                     }
-                    addToDownloadHistory(url);
-                } catch (error) {
-                    safeShowNotification(
-                        currentLanguage === 'ar' ? 'حدث خطأ أثناء معالجة الرابط' : 'Error processing URL',
-                        'error'
-                    );
                 }
-            }, 1000);
+
+                const a = document.createElement('a');
+                a.href = downloadUrl;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(downloadUrl);
+
+                safeShowNotification(
+                    currentLanguage === 'ar' ? 'تم التحميل بنجاح' : 'Download successful',
+                    'success'
+                );
+            } catch (error) {
+                console.error('Download error:', error);
+                safeShowNotification(
+                    currentLanguage === 'ar' ? 'فشل التحميل' : 'Download failed',
+                    'error'
+                );
+            }
         }
 
         function addToDownloadHistory(url) {
             const historyItem = document.createElement('div');
-            historyItem.className = 'history-item mb-2';
+            historyItem.className = 'bg-white rounded-lg p-4 shadow border-r-4 border-blue-500';
+            
+            const filename = url.split('/').pop() || 'download';
             historyItem.innerHTML = `
-                <div class="flex-1 truncate">
-                    <a href="${url}" target="_blank" class="text-blue-600 hover:text-blue-700">${url}</a>
-                </div>
-                <div class="history-actions">
-                    <button onclick="copyToClipboard('${url}')" class="text-blue-600 hover:text-blue-700">
-                        <i class="fas fa-copy"></i>
-                    </button>
+                <div class="flex justify-between items-center">
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm text-gray-500 mb-1">${new Date().toLocaleTimeString()}</p>
+                        <p class="truncate" title="${url}">${filename}</p>
+                    </div>
+                    <div class="flex gap-2 ml-4">
+                        <button onclick="window.open('${url}')" class="text-blue-600 hover:text-blue-800 p-1" title="${
+                            currentLanguage === 'ar' ? 'فتح الرابط' : 'Open URL'
+                        }">
+                            <i class="fas fa-external-link-alt"></i>
+                        </button>
+                        <button onclick="copyToClipboard('${url}')" class="text-blue-600 hover:text-blue-800 p-1" title="${
+                            currentLanguage === 'ar' ? 'نسخ الرابط' : 'Copy URL'
+                        }">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
                 </div>
             `;
-            downloadHistory.insertBefore(historyItem, downloadHistory.firstChild);
+            
+            if (downloadHistory.firstChild) {
+                downloadHistory.insertBefore(historyItem, downloadHistory.firstChild);
+            } else {
+                downloadHistory.appendChild(historyItem);
+            }
         }
 
-        function downloadMedia() {
+        // Expose functions to window for button onclick handlers
+        window.downloadMedia = downloadMedia;
+        window.copyUrl = () => {
             const url = mediaUrl.value.trim();
-            if (!url) return;
-            
-            safeShowNotification(
-                currentLanguage === 'ar' ? 'جاري تحميل الوسائط...' : 'Downloading media...',
-                'success'
-            );
-            
-            // Simulate download (replace with actual download logic)
-            setTimeout(() => {
-                window.open(url, '_blank');
-            }, 500);
-        }
+            if (url) {
+                copyToClipboard(url);
+            }
+        };
     }
+}
+
+// Utility function for debouncing
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
 }
 
 // Initialize Replacer Features

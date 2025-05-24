@@ -39,14 +39,9 @@
                 <!-- Color Picker Section -->
                 <div class="p-6 border-b border-gray-200">
                     <h2 class="text-lg font-semibold mb-4" data-ar="اختيار لون مباشر" data-en="Direct Color Picker">اختيار لون مباشر</h2>
-                    <div class="flex flex-col sm:flex-row gap-4 items-center">
-                        <div class="w-full sm:w-1/2">
-                            <input type="color" id="colorPicker" class="w-full h-16 rounded-lg cursor-pointer">
-                        </div>
-                        <div class="w-full sm:w-1/2 text-center">
-                            <div id="currentColorPreview" class="h-16 rounded-lg shadow-inner mb-2"></div>
-                            <div id="currentColorCode" class="font-mono text-sm"></div>
-                        </div>
+                    <div class="color-picker-wrapper relative">
+                        <input type="color" id="colorPicker" class="w-full h-20 sm:h-16 rounded-lg cursor-pointer opacity-0 absolute inset-0 z-10">
+                        <div id="colorPreview" class="w-full h-20 sm:h-16 rounded-lg border-2 border-gray-200"></div>
                     </div>
                 </div>
 
@@ -79,9 +74,9 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white/10 backdrop-blur-md py-4 mt-8">
+    <footer class="bg-gray-900 py-6 mt-12">
         <div class="container mx-auto px-4 text-center">
-            <p class="text-white/80 text-sm" data-ar="جميع الحقوق محفوظة 2025 - SQY" data-en="All Rights Reserved 2025 - SQY">
+            <p class="text-white text-base font-medium tracking-wide" data-ar="جميع الحقوق محفوظة 2025 - SQY" data-en="All Rights Reserved 2025 - SQY">
                 جميع الحقوق محفوظة 2025 - SQY
             </p>
         </div>

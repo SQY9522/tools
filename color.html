@@ -39,9 +39,14 @@
                 <!-- Color Picker Section -->
                 <div class="p-6 border-b border-gray-200">
                     <h2 class="text-lg font-semibold mb-4" data-ar="اختيار لون مباشر" data-en="Direct Color Picker">اختيار لون مباشر</h2>
-                    <div class="color-picker-wrapper relative">
-                        <input type="color" id="colorPicker" class="w-full h-20 sm:h-16 rounded-lg cursor-pointer opacity-0 absolute inset-0 z-10">
-                        <div id="colorPreview" class="w-full h-20 sm:h-16 rounded-lg border-2 border-gray-200"></div>
+                    <div class="flex flex-col sm:flex-row gap-4 items-center">
+                        <div class="w-full sm:w-1/2">
+                            <input type="color" id="colorPicker" class="w-full h-16 rounded-lg cursor-pointer shadow-md hover:shadow-lg transition-shadow">
+                        </div>
+                        <div class="w-full sm:w-1/2 text-center">
+                            <div id="currentColorPreview" class="h-16 rounded-lg shadow-inner mb-2"></div>
+                            <div id="currentColorCode" class="font-mono text-sm"></div>
+                        </div>
                     </div>
                 </div>
 
